@@ -95,6 +95,15 @@
   .small-compact {
     @apply text-[12px] font-semibold leading-[18px] tracking-[0.03em];
   }
+  @layer components {
+    .download_li {
+      @apply download_tech-link download_tech-link_last-before
+    download_tech-link_last-after;
+    }
+    .company-name {
+      @apply capitalize font-poppins   text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#5b13cf] via-[#811df9] via-[#a441f4] via-[#ffaf63] to-[#79f0da];
+    }
+  }
 
   /* END of Typography */
   /* START of Gradients */

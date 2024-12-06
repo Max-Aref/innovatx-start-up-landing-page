@@ -1,28 +1,60 @@
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link as LinkScroll } from "react-scroll";
 
-// NavLink component using react-scroll
-
-const NavLink = ({ title }) => (
-  <LinkScroll className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5'>
-    {title}
-  </LinkScroll>
-);
-
 const Header = () => {
+  // state for toggling navbar
   const [open, setOpen] = useState(false);
+  // handle scroll event state
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  // scroll event listener
+  useEffect(() => {
+    const handelScroll = () => {
+      setHasScrolled(window.scrollY > 32);
+    };
+    window.addEventListener("scroll", handelScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handelScroll);
+    };
+  }, []);
+
+  // NavLink component using react-scroll
+
+  const NavLink = ({ title }) => (
+    <LinkScroll
+      onClick={() => setOpen(false)}
+      to={title}
+      offset={-100}
+      spy
+      smooth
+      activeClass='nav-active'
+      className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5'
+    >
+      {title}
+    </LinkScroll>
+  );
 
   return (
-    <header className='fixed top-0 left-0 z-50 w-full py-10'>
+    <header
+      className={clsx(
+        "fixed top-0 left-0 z-50 w-full py-10 transition-all duration-500 max-lg:py-4",
+        hasScrolled && "py-2 bg-black-100 backdrop-blur-[8px]"
+      )}
+    >
       <div className='container flex h-14 items-center max-lg:px-5'>
         <a href='/' className='lg:hidden flex-1 cursor-pointer z-2'>
-          <img
-            src='/images/xora.svg'
-            height={55}
-            width={115}
-            logo='innovatx startup logo'
-          />
+          <div className='flex justify-start gap-4 items-center mt-8 -ml-2 '>
+            <img
+              src='/images/innovatx-logo.svg'
+              height={30}
+              width={74}
+              logo='innovatx startup logo'
+              className='shadow-lxl shadow-300 shadow-blue-500 bg-black-100'
+            />
+            <p className='company-name '>INNOVATX</p>
+          </div>
         </a>
         {/* navbar */}
         <div
@@ -32,7 +64,7 @@ const Header = () => {
           )}
         >
           <div className='max-lg:relative  max-lg:flex  max-lg:flex-col  max-lg:min-h-screen  max-lg:p-6  max-lg:overflow-hidden sidebar-before  max-lg:px-4 '>
-            <nav className=' max-lg:relative  max-lg:z-2  max-lg:my-auto'>
+            <nav className=' max-lg:relative  max-lg:z-2  max-lg:my-auto overflow-y-hidden'>
               <ul className='flex max-lg:block max-lg:px-12'>
                 <li className='nav-li'>
                   <NavLink title='features' />
@@ -42,19 +74,40 @@ const Header = () => {
                 <li className='nav-logo'>
                   <LinkScroll
                     to='hero'
-                    offset={-100}
+                    offset={-250}
                     spy
                     smooth
                     className={clsx(
                       "max-lg:hidden transform transition-transform duration-500 cursor-pointer"
                     )}
                   >
-                    <img
-                      src='/images/xora.svg'
-                      height={55}
-                      width={160}
-                      alt='innovatx logo'
-                    />
+                    <div
+                      className={clsx(
+                        "flex flex-col items-center justify-center  ",
+                        hasScrolled && " transition-all duration-500 mt-14 "
+                      )}
+                    >
+                      {" "}
+                      <img
+                        src='/images/innovatx-logo.svg'
+                        height={45}
+                        width={100}
+                        alt='innovatx logo'
+                        className={clsx(
+                          "mt-10 transition-transform duration-500 ease-in-out transform scale-100",
+                          hasScrolled &&
+                            "transition-transform duration-500 ease-in-out transform scale-100 shadow-lxl shadow-300 shadow-blue-500 bg-black-100"
+                        )}
+                      />
+                      <p
+                        className={clsx(
+                          "text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#79f0da] via-[#ffaf63] via- via-[#a441f4] via-[#811df9] to-[#5b13cf]  opacity-100   transition-all duration-500 ease-in-out",
+                          hasScrolled && "   mt-4"
+                        )}
+                      >
+                        INNOVATX
+                      </p>
+                    </div>
                   </LinkScroll>
                 </li>
                 <li className='nav-li'>
