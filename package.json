@@ -31,5 +31,8 @@
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
     "vite": "^5.4.10"
+  },
+  "resolutions": {
+    "react-slidedown": "2.4.7"
   }
 }
