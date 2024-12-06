@@ -14,14 +14,14 @@ const Footer = () => {
                max-md:justify-center
                 max-lg:space-between'
         >
-          <div className='flex items-center justify-center   gap-2'>
-            <p className='  relative mr-9 text-p5 transition-all duration-500 hover:text-p1'>
+          <div className='flex mx-auto items-center justify-center gap-2'>
+            <p className='  relative m-auto text-p5 transition-all duration-500 hover:text-p1'>
               Privacy Policy
             </p>
-            <p className='  relative mr-9 text-p5 transition-all duration-500 hover:text-p1'>
+            <p className='  relative m-auto text-p5 transition-all duration-500 hover:text-p1'>
               Terms of Use
             </p>
-            <p className=' mr-9 text-p5 transition-all duration-500 hover:text-p1'>
+            <p className=' m-auto text-p5 transition-all duration-500 hover:text-p1'>
               Site Map
             </p>
           </div>
