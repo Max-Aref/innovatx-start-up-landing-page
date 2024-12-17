@@ -14,16 +14,24 @@ const Footer = () => {
                max-md:justify-center
                 max-lg:space-between'
         >
-          <div className='flex mx-auto items-center justify-center gap-2'>
-            <p className='  relative m-auto text-p5 transition-all duration-500 hover:text-p1'>
-              Privacy Policy
-            </p>
-            <p className='  relative m-auto text-p5 transition-all duration-500 hover:text-p1'>
-              Terms of Use
-            </p>
-            <p className=' m-auto text-p5 transition-all duration-500 hover:text-p1'>
-              Site Map
-            </p>
+          <div className='flex flex-col mx-auto items-center justify-center gap-2 xl:flex-3/4'>
+            <div className='flex   mx-auto items-center justify-center gap-2'>
+              <p className='  relative m-auto text-p5 transition-all duration-500 hover:text-p1'>
+                Privacy Policy
+              </p>
+              <p className='  relative m-auto text-p5 transition-all duration-500 hover:text-p1'>
+                Terms of Use
+              </p>
+              <p className=' m-auto text-p5 transition-all duration-500 hover:text-p1'>
+                Site Map
+              </p>
+            </div>
+
+            <div className='small-compact flex flex-1 flex-wrap items-center  gap-5'>
+              <p className='opacity-70 leading-wider'>
+                © 2024 Copyright Innovatx technologies,LLC. All rights reserved.
+              </p>
+            </div>
           </div>
           {/* social media icons */}
           <ul className='flex  justify-center items-center gap-3 max-md:mt-10  '>
@@ -35,9 +43,6 @@ const Footer = () => {
               </li>
             ))}
           </ul>
-        </div>
-        <div className='small-compact flex flex-1 flex-wrap items-center  gap-5'>
-          <p className='opacity-70'>Copyright © Innovatx technologies 2024 </p>
         </div>
       </div>
     </footer>

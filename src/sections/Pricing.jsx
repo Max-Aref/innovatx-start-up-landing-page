@@ -10,11 +10,11 @@ const Pricing = () => {
   const [monthly, setMonthly] = useState(false);
   return (
     <section>
-      <Element name='pricing'>
+      <Element name='plans'>
         <div className='container'>
           <div className='max-w-960 pricing-head_before relative mx-auto border-l border-r border-s2 bg-s1/50 pb-40 pt-28 max-xl:max-w-4xl max-lg:border-none max-md:pb-32 max-md:pt-16    '>
             <h3 className='h3 max-lg:h4 max-md:h5 z-3 relative mx-auto mb-14 max-w-lg text-center text-p4 max-md:mb-11 max-sm:max-w-sm'>
-              Flexible pricing for businesses of all sizes
+              Flexible plans for businesses of all sizes
             </h3>
             {/* switch buttons */}
             <div className='relative z-4 mx-auto flex w-[375px] rounded-3xl border-[3px] border-s4/25 bg-s1/50 p-2 backdrop-blur-[6px] max-md:w-[310px]'>
@@ -91,28 +91,30 @@ const Pricing = () => {
                   <div
                     className={clsx(
                       "small-2 rounded-20 relative z-2 mx-auto mb-6 border-2 px-4 py-1.5 uppercase",
-                      index === 1 ? "border-p3 text-p3" : "border-p1 text-p1"
+                      index === 1
+                        ? "border-p3 text-p3 text-center"
+                        : "border-p1 text-p1 text-center"
                     )}
                   >
-                    {plan.title}
+                    {plan.caption}
                   </div>
-                  <div className='relative z-2 flex items-center justify-center'>
+                  <div className='relative z-2 flex items-center justify-center w-[225px] h-[50px]'>
                     <div
                       className={clsx(
                         "h-num flex items-start",
                         index === 1 ? "text-p3" : "text-p1"
                       )}
                     >
-                      <CountUp
+                      {/* <CountUp
                         start={plan.priceMonthly}
                         end={monthly ? plan.priceMonthly : plan.priceYearly}
                         duration={0.4}
                         useEasing={false}
                         preserveValue
-                      />
+                      /> */}
                     </div>
                     <div className='small-1 relative top-3 ml-1 uppercase'>
-                      / mo
+                      {/* / mo */}
                     </div>
                   </div>
                 </div>
@@ -122,7 +124,7 @@ const Pricing = () => {
                     index === 1 && "border-b"
                   )}
                 >
-                  {plan.caption}
+                  {plan.title}
                 </div>
                 {/* features section */}
                 <ul className='mx-auto space-y-4 xl:px-7'>

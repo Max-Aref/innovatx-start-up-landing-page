@@ -10,21 +10,22 @@ const Hero = () => {
           {/* left section - text section */}
           <div className='relative z-2 max-w-512 max-lg:max-w-388'>
             <div className='caption small-2 uppercase text-p3'>
-              <p> Your Digital Online Presence</p>
+              <p> YOUR GROWTH, SIMPLIFIED</p>
             </div>
             <h1 className='mb-6 h1 text-p4 uppercase max-lg:mb-7 max-lg:h2 max-md:mb-4 max-md:text-5xl max-md:leading-12'>
-              Amazingly simple
+              DIGITAL SOLUTIONS THAT DELIVER
             </h1>
             <p className='max-w-440 mb-14 body-1 max-md:mb-10'>
-              We have the experience and knowledge to get you more leads and
-              make your business grow.
+              Our expertise turns complexity into clarity. Boost leads,
+              strengthen your brand, and watch your business thrive with
+              streamlined, results-driven strategies.
             </p>
-            <LinkScroll to='features' offset={-100} spy smooth>
+            <LinkScroll to='contact' offset={-100} spy smooth>
               <Button icon='/images/zap.svg'>free consultation </Button>
             </LinkScroll>
           </div>
           {/* right section - Image section */}
-          <div className='absolute -top-32 left-[calc(50%-340px)] w-[1230px] pointer-events-none hero-img_res'>
+          <div className='absolute -top-20 left-[calc(50%-340px)] w-[1230px] pointer-events-none hero-img_res'>
             <img
               src='/images/hero.png'
               className='size-1230 max-lg:h-auto'
