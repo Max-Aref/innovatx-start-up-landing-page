@@ -71,12 +71,15 @@ const Header = () => {
                   <NavLink title='features' />
                 </li>
                 <li className='nav-li'>
+                  <NavLink title='Mission' />
+                </li>
+                <li className='nav-li'>
                   <NavLink title='plans' />
                 </li>
-
                 <li className='nav-li'>
                   <NavLink title='faq' />
                 </li>
+
                 <li className='nav-li'>
                   <NavLink title='contact' />
                 </li>
