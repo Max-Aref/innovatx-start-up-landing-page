@@ -159,10 +159,10 @@ export const plans = [
   },
   {
     id: "2",
-    title: "All-in-One Online Presence & Marketing Plan",
+    title: " Online Presence & Marketing Plan",
     priceMonthly: 39,
     priceYearly: 29,
-    caption: "A complete solution to dominate your digital space.",
+    caption: "A solution to dominate your digital space.",
     features: [
       "All previous plans features added",
       "up to 50 professional employees email addresses",

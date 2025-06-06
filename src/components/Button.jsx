@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import React from "react";
 import Marker from "./Marker";
+import PropTypes from "prop-types";
 
 const Button = ({
   icon,
@@ -50,6 +50,14 @@ const Button = ({
       <Inner />
     </button>
   );
+};
+Button.propTypes = {
+  icon: PropTypes.string,
+  children: PropTypes.node,
+  href: PropTypes.string,
+  containerClassName: PropTypes.string,
+  onClick: PropTypes.func,
+  markerFill: PropTypes.string,
 };
 
 export default Button;

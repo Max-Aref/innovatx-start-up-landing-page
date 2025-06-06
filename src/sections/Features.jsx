@@ -5,7 +5,7 @@ import Button from "../components/Button.jsx";
 
 const Features = () => {
   return (
-    <section>
+    <section className='mb-40'>
       <Element name='features'>
         <div className='container'>
           <div className='relative flex md:flex-wrap flex-nowrap border-2 border-s3 rounded-7xl md:overflow-hidden max-md:flex-col feature-after md:g7 max-md:border-none max-md:rounded-none max-md:gap-3'>

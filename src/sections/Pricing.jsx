@@ -3,16 +3,42 @@ import clsx from "clsx";
 import { Element } from "react-scroll";
 import { plans } from "../constants";
 import CountUp from "react-countup";
+import { scroller } from "react-scroll";
 
 import Button from "../components/Button";
 
 const Pricing = () => {
   const [monthly, setMonthly] = useState(false);
+  const [expandedCards, setExpandedCards] = useState({}); // Changed to object to track multiple cards
+
+  const featuresLimit = 4; // Show only 4 features initially
+
+  const toggleExpanded = (planId) => {
+    const wasExpanded = expandedCards[planId];
+
+    setExpandedCards((prev) => ({
+      ...prev,
+      [planId]: !prev[planId], // Toggle specific card
+    }));
+
+    // If collapsing (was expanded), scroll back to plans section with slower animation
+    if (wasExpanded) {
+      setTimeout(() => {
+        scroller.scrollTo("plans", {
+          duration: 1500, // Increased from 800 to 1500ms for slower scroll
+          delay: 200, // Increased delay for smoother transition
+          smooth: "easeInOutQuart",
+          offset: -100,
+        });
+      }, 300); // Increased timeout for better UX
+    }
+  };
+
   return (
-    <section>
+    <section className='mb-40'>
       <Element name='plans'>
         <div className='container'>
-          <div className='max-w-960 pricing-head_before relative mx-auto border-l border-r border-s2 bg-s1/50 pb-40 pt-28 max-xl:max-w-4xl max-lg:border-none max-md:pb-32 max-md:pt-16    '>
+          <div className='max-w-960 pricing-head_before relative mx-auto border-l border-r border-s2 bg-s1/50 pb-40 pt-28 max-xl:max-w-4xl max-lg:border-none max-md:pb-32 max-md:pt-16'>
             <h3 className='h3 max-lg:h4 max-md:h5 z-3 relative mx-auto mb-14 max-w-lg text-center text-p4 max-md:mb-11 max-sm:max-w-sm'>
               Flexible plans for businesses of all sizes
             </h3>
@@ -58,103 +84,142 @@ const Pricing = () => {
           </div>
           {/* pricing section */}
           <div className='scroll-hide relative z-2 -mt-12 flex items-start max-xl:gap-5 max-xl:overflow-auto max-xl:pt-6'>
-            {plans.map((plan, index) => (
-              <div
-                key={plan.id}
-                className='pricing-plan_first pricing-plan_last pricing-plan_odd pricing-plan_even relative border-2 p-7 max-xl:min-w-80 max-lg:rounded-3xl xl:w-[calc(33.33%+2px)]'
-              >
-                {index === 1 && (
-                  <div className='g4 absolute h-330 left-0 right-0 top-0 z-1 rounded-tl-3xl rounded-tr-3xl' />
-                )}
+            {plans.map((plan, index) => {
+              const isExpanded = expandedCards[plan.id] || false; // Check specific card
+              const hasMoreFeatures = plan.features.length > featuresLimit;
+              const displayFeatures = isExpanded
+                ? plan.features
+                : plan.features.slice(0, featuresLimit);
 
+              return (
                 <div
+                  key={plan.id}
                   className={clsx(
-                    "absolute left-0 right-0 z-2 flex items-center justify-center",
-                    index === 1 ? "-top-6" : "-top-6 xl:-top-11"
+                    "pricing-plan_first pricing-plan_last pricing-plan_odd pricing-plan_even relative p-7 max-xl:min-w-80 max-lg:rounded-3xl xl:w-[calc(33.33%+2px)] flex flex-col transition-all duration-500",
+                    // Ensure proper border classes for all cards with consistent borders
+                    "border-2 border-s2",
+                    // Additional border styling based on position
+                    index === 0 && "xl:border-none",
+                    index === 1 && "xl:border-2",
+                    index === 2 && "xl:border-none"
                   )}
                 >
-                  <img
-                    src={plan.logo}
-                    alt={plan.title}
-                    className={clsx(
-                      "object-contain drop-shadow-2xl",
-                      index === 1 ? "size-[120px]" : "size-[90px]"
-                    )}
-                  />
-                </div>
-                <div
-                  className={clsx(
-                    "relative flex flex-col items-center",
-                    index === 1 ? "pt-24" : "pt-12"
+                  {index === 1 && (
+                    <div className='g4 absolute h-330 left-0 right-0 top-0 z-1 rounded-tl-3xl rounded-tr-3xl' />
                   )}
-                >
+
                   <div
                     className={clsx(
-                      "small-2 rounded-20 relative z-2 mx-auto mb-6 border-2 px-4 py-1.5 uppercase",
-                      index === 1
-                        ? "border-p3 text-p3 text-center"
-                        : "border-p1 text-p1 text-center"
+                      "absolute left-0 right-0 z-2 flex items-center justify-center",
+                      index === 1 ? "-top-6" : "-top-6 xl:-top-11"
                     )}
                   >
-                    {plan.caption}
+                    <img
+                      src={plan.logo}
+                      alt={plan.title}
+                      className={clsx(
+                        "object-contain drop-shadow-2xl",
+                        index === 1 ? "size-[120px]" : "size-[90px]"
+                      )}
+                    />
                   </div>
-                  <div className='relative z-2 flex items-center justify-center w-[225px] h-[50px]'>
+
+                  <div
+                    className={clsx(
+                      "relative flex flex-col items-center",
+                      index === 1 ? "pt-24" : "pt-12"
+                    )}
+                  >
                     <div
                       className={clsx(
-                        "h-num flex items-start",
-                        index === 1 ? "text-p3" : "text-p1"
+                        "small-2 rounded-20 relative z-2 mx-auto mb-6 border-2 px-4 py-1.5 uppercase",
+                        index === 1
+                          ? "border-p3 text-p3 text-center"
+                          : "border-p1 text-p1 text-center"
                       )}
                     >
-                      {/* <CountUp
-                        start={plan.priceMonthly}
-                        end={monthly ? plan.priceMonthly : plan.priceYearly}
-                        duration={0.4}
-                        useEasing={false}
-                        preserveValue
-                      /> */}
+                      {plan.caption}
                     </div>
-                    <div className='small-1 relative top-3 ml-1 uppercase'>
-                      {/* / mo */}
+                    <div className='relative z-2 flex items-center justify-center w-[225px] h-[50px]'>
+                      <div
+                        className={clsx(
+                          "h-num flex items-start",
+                          index === 1 ? "text-p3" : "text-p1"
+                        )}
+                      >
+                        {/* <CountUp
+                          start={plan.priceMonthly}
+                          end={monthly ? plan.priceMonthly : plan.priceYearly}
+                          duration={0.4}
+                          useEasing={false}
+                          preserveValue
+                        /> */}
+                      </div>
+                      <div className='small-1 relative top-3 ml-1 uppercase'>
+                        {/* / mo */}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div
-                  className={clsx(
-                    "body-1 relative z-2 mb-10 w-full border-b-s2 pb-9 text-center text-p4",
-                    index === 1 && "border-b"
+
+                  <div className='body-1 relative z-2 mb-10 w-full pb-9 text-center text-p4 border-b border-s2'>
+                    {plan.title}
+                  </div>
+
+                  {/* features section */}
+                  <ul className='mx-auto space-y-4 xl:px-7 flex-grow'>
+                    {displayFeatures.map((feature, featureIndex) => (
+                      <li
+                        key={featureIndex}
+                        className='relative flex items-center gap-5'
+                      >
+                        <img
+                          src='/images/check.png'
+                          alt='check'
+                          className='size-10 object-contain'
+                        />
+                        <p className='flex-1'>{feature}</p>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Get Started button */}
+                  <div className='mt-10 flex w-full justify-center'>
+                    <Button icon={plan.icon}>Get Started</Button>
+                  </div>
+
+                  {/* Learn More button - now below Get Started */}
+                  {hasMoreFeatures && (
+                    <div className='flex justify-center mt-4'>
+                      <button
+                        onClick={() => toggleExpanded(plan.id)}
+                        className={clsx(
+                          "text-sm px-4 py-2 rounded-full border transition-all duration-300 hover:scale-105",
+                          index === 1
+                            ? "border-p3 text-p3 hover:bg-p3/10"
+                            : "border-p1 text-p1 hover:bg-p1/10"
+                        )}
+                      >
+                        {isExpanded
+                          ? "Show Less"
+                          : `Learn More (+${
+                              plan.features.length - featuresLimit
+                            })`}
+                      </button>
+                    </div>
                   )}
-                >
-                  {plan.title}
+
+                  {index === 1 && (
+                    <p className='small-compact mt-9 text-center text-p3 before:mx-2.5 before:content-["-"] after:mx-2.5 after:content-["-"]'>
+                      Limited time offer
+                    </p>
+                  )}
                 </div>
-                {/* features section */}
-                <ul className='mx-auto space-y-4 xl:px-7'>
-                  {plan.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className='relative flex items-center gap-5'
-                    >
-                      <img
-                        src='/images/check.png'
-                        alt='check'
-                        className='size-10 object-contain'
-                      />
-                      <p className=' flex-1'>{feature}</p>
-                    </li>
-                  ))}
-                </ul>
-                <div className='mt-10 flex w-full justify-center'>
-                  <Button icon={plan.icon}>Get Started</Button>
-                </div>
-                {index === 1 && (
-                  <p className='small-compact mt-9 text-center text-p3 before:mx-2.5 before:content-["-"] after:mx-2.5 after:content-["-"]'>
-                    Limited time offer
-                  </p>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </Element>
+      <div className='mb-52'></div>
     </section>
   );
 };
