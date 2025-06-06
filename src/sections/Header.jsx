@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link as LinkScroll } from "react-scroll";
+import clsx from "clsx";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -116,7 +116,7 @@ const Header = () => {
         >
           <div className='max-lg:relative max-lg:flex max-lg:flex-col max-lg:min-h-screen max-lg:p-6 max-lg:overflow-hidden sidebar-before max-lg:px-4'>
             <nav className='max-lg:relative max-lg:z-2 max-lg:my-auto overflow-visible'>
-              <ul className='flex justify-between gap-10 max-lg:block max-lg:px-12'>
+              <ul className='flex justify-between gap-10 max-lg:block max-lg:px-12 mt-10'>
                 <li className='nav-li'>
                   <NavLink title='features' />
                 </li>

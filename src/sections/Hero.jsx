@@ -24,8 +24,12 @@ const Hero = () => {
               <Button icon='/images/zap.svg'>free consultation </Button>
             </LinkScroll>
           </div>
-          {/* right section - Image section */}
-          <div className='absolute -top-20 left-[calc(50%-340px)] w-[1230px] pointer-events-none hero-img_res'>
+
+          {/* right section - Image section - Hidden on medium screens and below */}
+          <div
+            className='absolute -top-20 left-[calc(50%-340px)] w-[1230px] pointer-events-none hero-img_res
+                          lg:block hidden'
+          >
             <img
               src='/images/hero.png'
               className='size-1230 max-lg:h-auto'
