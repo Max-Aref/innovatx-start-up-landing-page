@@ -1,27 +1,24 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./sections/Header";
-import Hero from "./sections/Hero";
-import Features from "./sections/Features";
-import Pricing from "./sections/Pricing";
-import Faq from "./sections/Faq";
-import Testimonials from "./sections/Testimonials";
-import Download from "./sections/Download";
 import Footer from "./sections/Footer";
-import Contact from "./sections/Contact";
+import Home from "./pages/Home";
+import Careers from "./pages/Careers";
 
 function App() {
   return (
-    <main className='overflow-hidden'>
-      <Header />
-      <Hero />
-      <Features />
-      <Pricing />
-      <Faq />
-      <Testimonials />
-      <Download />
-      <Contact />
-      <Footer />
-    </main>
+    <Router>
+      <div className='min-h-screen bg-s1'>
+        <Header />
+        <main>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/careers' element={<Careers />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
