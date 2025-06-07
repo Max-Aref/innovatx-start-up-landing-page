@@ -167,7 +167,7 @@ Configured for React best practices with:
 
 - **Website**: [innovatx.com](https://innovatx.com)
 - **Email**: careers@innovatx.com
-- **Location**: Remote / Austin, TX
+- **Location** Austin, TX USA
 
 ## 🙏 Acknowledgments
 

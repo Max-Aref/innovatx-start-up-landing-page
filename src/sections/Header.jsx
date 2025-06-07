@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link as LinkScroll } from "react-scroll";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -85,6 +86,13 @@ const Header = () => {
     </LinkScroll>
   );
 
+  // Handle logo click to go to home page and scroll to hero
+  const handleLogoClick = () => {
+    // Close mobile menu if open
+    setOpen(false);
+    setMissionDropdownOpen(false);
+  };
+
   return (
     <header
       className={clsx(
@@ -92,10 +100,14 @@ const Header = () => {
         hasScrolled && "bg-black-100 backdrop-blur-[8px]"
       )}
     >
-      <div className='container flex justify-between h-14 items-center max-lg:px-5'>
-        {/* Logo */}
-        <a href='/' className='flex cursor-pointer z-2'>
-          <div className='flex gap-4 items-center mt-8 -ml-2'>
+      <div className='container flex justify-between items-center h-16 max-lg:px-5'>
+        {/* Logo - Aligned with navigation */}
+        <Link
+          to='/'
+          className='flex cursor-pointer z-2 hover:scale-105 transition-transform duration-300'
+          onClick={handleLogoClick}
+        >
+          <div className='flex gap-4 items-center h-full'>
             <img
               src='/images/innovatx-logo.svg'
               height={30}
@@ -103,11 +115,13 @@ const Header = () => {
               alt='innovatx startup logo'
               className='shadow-lxl shadow-300 shadow-blue-500 bg-black-100'
             />
-            <p className='company-name'>INNOVATX</p>
+            <p className='company-name text-p4 font-bold hover:text-p1 transition-colors duration-300'>
+              INNOVATX
+            </p>
           </div>
-        </a>
+        </Link>
 
-        {/* Navbar */}
+        {/* Navbar - Centered alignment */}
         <div
           className={clsx(
             "w-full max-lg:fixed max-lg:top-0 max-lg:left-0 max-lg:w-full max-lg:bg-s2 max-lg:opacity-0 flex-50",
@@ -116,16 +130,16 @@ const Header = () => {
         >
           <div className='max-lg:relative max-lg:flex max-lg:flex-col max-lg:min-h-screen max-lg:p-6 max-lg:overflow-hidden sidebar-before max-lg:px-4'>
             <nav className='max-lg:relative max-lg:z-2 max-lg:my-auto overflow-visible'>
-              <ul className='flex justify-between gap-10 max-lg:block max-lg:px-12 mt-10'>
-                <li className='nav-li'>
+              <ul className='flex justify-between items-center gap-10 max-lg:block max-lg:px-12 h-16 max-lg:h-auto max-lg:mt-10'>
+                <li className='nav-li flex items-center h-full'>
                   <NavLink title='features' />
                 </li>
 
                 {/* Mission Dropdown */}
-                <li className='nav-li relative'>
+                <li className='nav-li relative flex items-center h-full'>
                   <div
                     ref={triggerRef}
-                    className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5 flex items-center gap-1 select-none'
+                    className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5 flex items-center gap-1 select-none h-full'
                     onClick={handleMissionClick}
                     onMouseEnter={handleMissionHover}
                     onMouseLeave={handleMissionLeave}
@@ -170,14 +184,25 @@ const Header = () => {
                   )}
                 </li>
 
-                <li className='nav-li'>
+                <li className='nav-li flex items-center h-full'>
                   <NavLink title='plans' />
                 </li>
-                <li className='nav-li'>
+                <li className='nav-li flex items-center h-full'>
                   <NavLink title='faq' />
                 </li>
-                <li className='nav-li'>
+                <li className='nav-li flex items-center h-full'>
                   <NavLink title='contact' />
+                </li>
+
+                {/* Careers Link */}
+                <li className='nav-li flex items-center h-full'>
+                  <Link
+                    to='/careers'
+                    onClick={() => setOpen(false)}
+                    className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5 h-full flex items-center'
+                  >
+                    Careers
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -202,7 +227,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Toggle Button */}
+        {/* Mobile Toggle Button - Centered */}
         <button
           className='lg:hidden z-2 size-10 border-2 border-s4/25 rounded-full flex justify-center items-center'
           onClick={() => setOpen((prevState) => !prevState)}
