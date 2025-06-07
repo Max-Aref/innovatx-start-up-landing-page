@@ -16,9 +16,10 @@ const Contact = () => {
   });
   const [loading, setLoading] = useState(false);
 
+  // Fixed handleChange function
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [name]: value }); // Use name, not e.target.name
   };
 
   // show alert
@@ -33,6 +34,17 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
+
+    // Add validation
+    if (!form.name || !form.email || !form.message) {
+      alert("Please fill in all required fields");
+      setLoading(false);
+      return;
+    }
+
+    // Initialize EmailJS
+    emailjs.init("SVcmK9kMb8wX0RSQa");
+
     emailjs
       .send(
         "service_qi5vmts",
@@ -43,27 +55,54 @@ const Contact = () => {
           from_email: form.email,
           to_email: "mohamed.aref32@gmail.com",
           message: form.message,
+          plan: form.plan || "Not specified", // Include plan field
         },
         "SVcmK9kMb8wX0RSQa"
       )
-      .then(() => {
-        setForm({ name: "", email: "", plan: "", message: "" });
+      .then((response) => {
+        console.log("SUCCESS!", response.status, response.text);
+
+        // Reset form
+        setForm({
+          name: "",
+          email: "",
+          plan: "",
+          message: "",
+        });
+
+        // Reset form element
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+
         setLoading(false);
-        ShowAlert();
+        ShowAlert(); // Remove parameter
       })
       .catch((err) => {
+        console.error("FAILED...", err);
         setLoading(false);
-        console.log(err);
-        alert("Failed to send message. Please try again later");
+
+        // Better error logging
+        console.log("Error details:", {
+          status: err.status,
+          text: err.text,
+          message: err.message,
+        });
+
+        alert(
+          `Failed to send message: ${
+            err.text || err.message || "Unknown error"
+          }`
+        );
       });
   };
 
   return (
     <section className='g7'>
-      <Element name='contact' className='relative  '>
-        <div className='container '>
-          <div className='xl:mt-0 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden'>
-            <div className='flex-[0.75] p-12 pt-20 rounded-2xl'>
+      <Element name='contact' className='relative'>
+        <div className='container'>
+          <div className='mt-0 overflow-hidden xl:flex-row flex gap-10'>
+            <div className='flex-[0.75] p-12 rounded-2xl'>
               <p className='sectionSubText'>Get in touch</p>
               <h3 className='sectionHeadText text-[#79f0da]'>Contact.</h3>
               <form
@@ -71,22 +110,23 @@ const Contact = () => {
                 onSubmit={handleSubmit}
                 className='flex flex-col gap-8 mt-12'
               >
-                <label className='flex  flex-col '>
-                  <span className='  font-medium mb-4 small-compact uppercase text-s3'>
-                    Your Name
+                <label className='flex flex-col'>
+                  <span className='font-medium mb-4 small-compact uppercase text-s3'>
+                    Your Name *
                   </span>
                   <input
                     type='text'
                     name='name'
                     value={form.name}
                     onChange={handleChange}
-                    placeholder=' Your name'
-                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg    font-medium  border-spacing-2 border-[#79f0da]'
+                    placeholder='Your name'
+                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-black text-base font-medium rounded-lg border-spacing-2 border-[#79f0da]'
+                    required
                   />
                 </label>
-                <label className='flex  flex-col'>
+                <label className='flex flex-col'>
                   <span className='small-compact uppercase text-s3 font-medium mb-4'>
-                    Your email
+                    Your email *
                   </span>
                   <input
                     type='email'
@@ -94,10 +134,11 @@ const Contact = () => {
                     value={form.email}
                     onChange={handleChange}
                     placeholder='Your email'
-                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
+                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-black text-base font-medium rounded-lg outlined-none border-none'
+                    required
                   />
                 </label>
-                <label className='flex  flex-col'>
+                <label className='flex flex-col'>
                   <span className='small-compact uppercase text-s3 font-medium mb-4'>
                     Your plan of choice
                   </span>
@@ -107,12 +148,12 @@ const Contact = () => {
                     value={form.plan}
                     onChange={handleChange}
                     placeholder='What is the plan of choice?'
-                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
+                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-black text-base font-medium rounded-lg outlined-none border-none'
                   />
                 </label>
-                <label className='flex  flex-col'>
+                <label className='flex flex-col'>
                   <span className='small-compact uppercase text-s3 font-medium mb-4'>
-                    Your Message
+                    Your Message *
                   </span>
                   <textarea
                     rows={7}
@@ -120,41 +161,28 @@ const Contact = () => {
                     value={form.message}
                     onChange={handleChange}
                     placeholder='Your message'
-                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-black rounded-lg outlined-none   font-medium border-2 border-s3'
+                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-black text-base font-medium rounded-lg outlined-none border-2 border-s3'
+                    required
                   />
                 </label>
-                <div className=' flex justify-center'>
+                <div className='flex justify-center'>
                   <Button
                     type='submit'
-                    className=' '
-                    containerClassName='w-[500px]'
+                    containerClassName='w-[500px] max-w-full'
+                    disabled={loading}
                   >
                     <span className='text-center'>
-                      {" "}
                       {loading ? "Sending..." : "Send Message"}
                     </span>
                   </Button>
                 </div>
               </form>
             </div>
-            {/* the earth section */}
-
-            <div className='xl:flex-1 xl:h-auto  md:h-[550px] h-[350px]  '>
-              {/* <EarthCanvas /> */}
-            </div>
           </div>
         </div>
       </Element>
     </section>
   );
-};
-
-const alert = (message) => {
-  Swal.fire({
-    title: "Drag me!",
-    icon: "success",
-    draggable: true,
-  });
 };
 
 export default Contact;

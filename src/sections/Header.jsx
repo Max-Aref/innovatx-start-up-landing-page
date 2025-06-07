@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link as LinkScroll } from "react-scroll";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
+import { animateScroll as scroll } from "react-scroll";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -9,6 +10,8 @@ const Header = () => {
   const [missionDropdownOpen, setMissionDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const triggerRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +20,46 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Enhanced smooth scroll to top function
+  const smoothScrollToTop = () => {
+    // Use react-scroll for smooth animation
+    scroll.scrollToTop({
+      duration: 1200,
+      delay: 0,
+      smooth: "easeInOutCubic",
+    });
+  };
+
+  // Handle logo click to go to home page and scroll to header smoothly
+  const handleLogoClick = (e) => {
+    // Close mobile menu if open
+    setOpen(false);
+    setMissionDropdownOpen(false);
+
+    // Check if we're already on the home page
+    if (location.pathname === "/") {
+      // If on home page, prevent default link behavior and smooth scroll to top
+      e.preventDefault();
+      smoothScrollToTop();
+    } else {
+      // If on another page (like careers), navigate to home
+      // The scroll will happen automatically when the page loads
+      navigate("/");
+    }
+  };
+
+  // Handle scrolling after navigation to home page
+  useEffect(() => {
+    if (location.pathname === "/") {
+      // Small delay to ensure page is fully loaded before scrolling
+      const timeoutId = setTimeout(() => {
+        smoothScrollToTop();
+      }, 150);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [location.pathname]);
 
   // Handle click outside to close dropdown
   useEffect(() => {
@@ -35,7 +78,7 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const NavLink = ({ title }) => (
+  const NavLinkScroll = ({ title }) => (
     <LinkScroll
       onClick={() => setOpen(false)}
       to={title}
@@ -86,13 +129,6 @@ const Header = () => {
     </LinkScroll>
   );
 
-  // Handle logo click to go to home page and scroll to hero
-  const handleLogoClick = () => {
-    // Close mobile menu if open
-    setOpen(false);
-    setMissionDropdownOpen(false);
-  };
-
   return (
     <header
       className={clsx(
@@ -101,7 +137,7 @@ const Header = () => {
       )}
     >
       <div className='container flex justify-between items-center h-16 max-lg:px-5'>
-        {/* Logo - Aligned with navigation */}
+        {/* Logo - Enhanced with smooth scroll */}
         <Link
           to='/'
           className='flex cursor-pointer z-2 hover:scale-105 transition-transform duration-300'
@@ -132,7 +168,7 @@ const Header = () => {
             <nav className='max-lg:relative max-lg:z-2 max-lg:my-auto overflow-visible'>
               <ul className='flex justify-between items-center gap-10 max-lg:block max-lg:px-12 h-16 max-lg:h-auto max-lg:mt-10'>
                 <li className='nav-li flex items-center h-full'>
-                  <NavLink title='features' />
+                  <NavLinkScroll title='features' />
                 </li>
 
                 {/* Mission Dropdown */}
@@ -185,24 +221,29 @@ const Header = () => {
                 </li>
 
                 <li className='nav-li flex items-center h-full'>
-                  <NavLink title='plans' />
+                  <NavLinkScroll title='plans' />
                 </li>
                 <li className='nav-li flex items-center h-full'>
-                  <NavLink title='faq' />
+                  <NavLinkScroll title='faq' />
                 </li>
                 <li className='nav-li flex items-center h-full'>
-                  <NavLink title='contact' />
+                  <NavLinkScroll title='contact' />
                 </li>
 
-                {/* Careers Link */}
+                {/* Careers Link - Now matches other links */}
                 <li className='nav-li flex items-center h-full'>
-                  <Link
+                  <NavLink
                     to='/careers'
+                    className={({ isActive }) =>
+                      clsx(
+                        "base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5",
+                        isActive && "nav-active"
+                      )
+                    }
                     onClick={() => setOpen(false)}
-                    className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5 h-full flex items-center'
                   >
                     Careers
-                  </Link>
+                  </NavLink>
                 </li>
               </ul>
             </nav>

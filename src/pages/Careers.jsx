@@ -11,6 +11,18 @@ const Careers = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Google Form links for each job position
+  const jobApplicationLinks = {
+    1: "https://forms.gle/dZxoxGsZCvBBLeKt8", // Senior Full Stack Developer
+    2: "https://forms.gle/HUfLFw6kmxtjQRBe9", // UI/UX Designer
+    3: "https://forms.gle/ghi789", // DevOps Engineer
+    4: "https://forms.gle/jkl012", // Product Manager
+    5: "https://forms.gle/roB5EqpBbuBwc2Mx8", // WordPress Expert Developer
+    6: "https://forms.gle/yC5SeBQzFXzAMpDg7", // Social Media Marketing Manager
+    7: "https://forms.gle/uNByhT1RAFKBiEmXA", // Social Media Content Creator Intern
+    8: "https://forms.gle/AJcF9hGpQfJJW3qK8", // Mobile Applications Developer
+  };
+
   const jobPostings = [
     {
       id: 1,
@@ -19,6 +31,7 @@ const Careers = () => {
       location: "Remote /Austin",
       type: "Full-time",
       experience: "5+ years",
+      applicationLink: jobApplicationLinks[1],
       description:
         "We're looking for a senior full stack developer to join our innovative team. You'll work on cutting-edge web applications and help shape the future of our technology stack.",
       requirements: [
@@ -41,15 +54,16 @@ const Careers = () => {
       department: "Design",
       location: "Remote / Austin",
       type: "Full-time",
-      experience: "3+ years",
+      experience: "5+ years",
+      applicationLink: jobApplicationLinks[2],
       description:
         "Join our design team to create beautiful, intuitive user experiences that delight our customers and drive business growth.",
       requirements: [
-        "3+ years of experience in UI/UX design",
+        "5+ years of experience in UI/UX design",
         "Proficiency in Figma, Adobe Creative Suite, and prototyping tools",
         "Strong portfolio showcasing web and mobile design projects",
         "Understanding of design systems and accessibility principles",
-        "Bachelor's degree in Design, HCI, or related field",
+        "Bachelor's degree in Design, creative arts, or related field",
       ],
       responsibilities: [
         "Design user interfaces for web and mobile applications",
@@ -58,63 +72,66 @@ const Careers = () => {
         "Collaborate with developers to ensure design implementation",
       ],
     },
-    {
-      id: 3,
-      title: "DevOps Engineer",
-      department: "Infrastructure",
-      location: "Remote / Austin",
-      type: "Full-time",
-      experience: "4+ years",
-      description:
-        "Help us build and maintain robust, scalable infrastructure that powers our applications and supports our growing user base.",
-      requirements: [
-        "4+ years of experience with cloud infrastructure and automation",
-        "Expertise in Docker, Kubernetes, and CI/CD pipelines",
-        "Strong knowledge of AWS, Azure, or Google Cloud Platform",
-        "Experience with Infrastructure as Code (Terraform, CloudFormation)",
-        "Excellent troubleshooting and monitoring skills",
-      ],
-      responsibilities: [
-        "Design and maintain cloud infrastructure",
-        "Implement and optimize CI/CD pipelines",
-        "Monitor system performance and reliability",
-        "Ensure security best practices and compliance",
-      ],
-    },
-    {
-      id: 4,
-      title: "Product Manager",
-      department: "Product",
-      location: "Remote / Austin",
-      type: "Full-time",
-      experience: "4+ years",
-      description:
-        "Drive product strategy and execution for our core platform. You'll work closely with engineering, design, and business teams to deliver innovative solutions.",
-      requirements: [
-        "4+ years of product management experience in tech",
-        "Strong analytical and data-driven decision-making skills",
-        "Experience with agile development methodologies",
-        "Excellent communication and stakeholder management abilities",
-        "MBA or equivalent experience preferred",
-      ],
-      responsibilities: [
-        "Define product roadmap and strategy",
-        "Gather and prioritize product requirements",
-        "Work with engineering teams to deliver features",
-        "Analyze product metrics and user feedback",
-      ],
-    },
+    // {
+    //   id: 3,
+    //   title: "DevOps Engineer",
+    //   department: "Infrastructure",
+    //   location: "Remote / Austin",
+    //   type: "Full-time",
+    //   experience: "4+ years",
+    //   applicationLink: jobApplicationLinks[3],
+    //   description:
+    //     "Help us build and maintain robust, scalable infrastructure that powers our applications and supports our growing user base.",
+    //   requirements: [
+    //     "4+ years of experience with cloud infrastructure and automation",
+    //     "Expertise in Docker, Kubernetes, and CI/CD pipelines",
+    //     "Strong knowledge of AWS, Azure, or Google Cloud Platform",
+    //     "Experience with Infrastructure as Code (Terraform, CloudFormation)",
+    //     "Excellent troubleshooting and monitoring skills",
+    //   ],
+    //   responsibilities: [
+    //     "Design and maintain cloud infrastructure",
+    //     "Implement and optimize CI/CD pipelines",
+    //     "Monitor system performance and reliability",
+    //     "Ensure security best practices and compliance",
+    //   ],
+    // },
+    // {
+    //   id: 4,
+    //   title: "Product Manager",
+    //   department: "Product",
+    //   location: "Remote / Austin",
+    //   type: "Full-time",
+    //   experience: "4+ years",
+    //   applicationLink: jobApplicationLinks[4],
+    //   description:
+    //     "Drive product strategy and execution for our core platform. You'll work closely with engineering, design, and business teams to deliver innovative solutions.",
+    //   requirements: [
+    //     "4+ years of product management experience in tech",
+    //     "Strong analytical and data-driven decision-making skills",
+    //     "Experience with agile development methodologies",
+    //     "Excellent communication and stakeholder management abilities",
+    //     "MBA or equivalent experience preferred",
+    //   ],
+    //   responsibilities: [
+    //     "Define product roadmap and strategy",
+    //     "Gather and prioritize product requirements",
+    //     "Work with engineering teams to deliver features",
+    //     "Analyze product metrics and user feedback",
+    //   ],
+    // },
     {
       id: 5,
       title: "WordPress Expert Developer",
       department: "Web Development",
       location: "Remote / Austin",
       type: "Full-time",
-      experience: "4+ years",
+      experience: "5+ years",
+      applicationLink: jobApplicationLinks[5],
       description:
         "We're seeking a skilled WordPress expert developer to create and maintain high-performance WordPress websites and applications. You'll work with PHP, custom themes, plugins, and modern WordPress development practices.",
       requirements: [
-        "4+ years of professional WordPress development experience",
+        "5+ years of professional WordPress development experience",
         "Expert-level PHP programming skills and MySQL database management",
         "Proficiency in custom theme and plugin development from scratch",
         "Strong knowledge of WordPress REST API and Gutenberg block development",
@@ -140,11 +157,12 @@ const Careers = () => {
       department: "Marketing",
       location: "Remote / Austin",
       type: "Full-time",
-      experience: "3+ years",
+      experience: "5+ years",
+      applicationLink: jobApplicationLinks[6],
       description:
         "We're looking for a creative and strategic Social Media Marketing Manager to manage multiple client accounts and drive engagement across all major social platforms. You'll be responsible for developing comprehensive social media strategies that build brand awareness and drive business growth.",
       requirements: [
-        "3+ years of experience managing multiple social media accounts for businesses",
+        "5+ years of experience managing multiple social media accounts for businesses",
         "Proven track record with Facebook, Instagram, Twitter, LinkedIn, TikTok, and YouTube",
         "Experience with social media management tools (Hootsuite, Buffer, Sprout Social)",
         "Strong knowledge of social media analytics and performance tracking",
@@ -173,6 +191,7 @@ const Careers = () => {
       location: "Remote / Austin",
       type: "Internship",
       experience: "Entry Level",
+      applicationLink: jobApplicationLinks[7],
       description:
         "Join our dynamic marketing team as a Social Media Content Creator Intern! This is an exciting opportunity for a creative individual to gain hands-on experience in content creation, social media strategy, and digital marketing while working with multiple client accounts.",
       requirements: [
@@ -197,6 +216,45 @@ const Careers = () => {
         "Monitor competitor activities and industry best practices",
         "Collaborate with the marketing team on client projects and campaigns",
         "Learn and apply social media analytics to measure content performance",
+      ],
+    },
+    {
+      id: 8,
+      title: "Senior Mobile Applications Developer",
+      department: "Mobile Development",
+      location: "Remote / Austin",
+      type: "Full-time",
+      experience: "6+ years",
+      applicationLink: jobApplicationLinks[8],
+      description:
+        "Join our innovative mobile development team to create cutting-edge native applications for iOS and Android platforms. You'll lead the development of high-performance mobile solutions that deliver exceptional user experiences and drive business growth across multiple client projects.",
+      requirements: [
+        "6+ years of professional mobile application development experience",
+        "Expert proficiency in Swift/Objective-C for iOS and Kotlin/Java for Android development",
+        "Strong experience with cross-platform frameworks (React Native, Flutter, or Xamarin)",
+        "Deep understanding of mobile UI/UX design principles and platform-specific guidelines",
+        "Experience with mobile app architecture patterns (MVP, MVVM, Clean Architecture)",
+        "Proficiency in RESTful APIs, GraphQL, and third-party library integration",
+        "Knowledge of mobile security best practices and data encryption techniques",
+        "Experience with app store deployment processes and App Store Optimization (ASO)",
+        "Familiarity with mobile analytics tools (Firebase Analytics, Crashlytics, Flurry)",
+        "Understanding of mobile DevOps, CI/CD pipelines, and automated testing frameworks",
+        "Experience with version control systems (Git) and agile development methodologies",
+        "Bachelor's degree in Computer Science, Software Engineering, or equivalent experience",
+      ],
+      responsibilities: [
+        "Design and develop high-quality native mobile applications for iOS and Android platforms",
+        "Collaborate with product managers and designers to translate requirements into technical solutions",
+        "Implement responsive and intuitive user interfaces following platform-specific design guidelines",
+        "Optimize mobile applications for performance, battery efficiency, and memory management",
+        "Integrate mobile apps with backend services, APIs, and cloud platforms (AWS, Firebase)",
+        "Conduct code reviews and mentor junior developers on mobile development best practices",
+        "Implement robust testing strategies including unit tests, integration tests, and UI automation",
+        "Stay current with mobile development trends, new platform features, and emerging technologies",
+        "Troubleshoot and debug complex mobile application issues across different devices and OS versions",
+        "Manage app store submissions, updates, and compliance with platform guidelines",
+        "Collaborate with QA teams to ensure comprehensive testing and quality assurance",
+        "Document technical specifications, APIs, and development processes for team knowledge sharing",
       ],
     },
   ];
@@ -264,12 +322,14 @@ const Careers = () => {
       type: PropTypes.string.isRequired,
       experience: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
+      applicationLink: PropTypes.string.isRequired,
       requirements: PropTypes.arrayOf(PropTypes.string),
       responsibilities: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     isSelected: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired,
   };
+
   const JobDetails = ({ job }) => (
     <div className='border-2 border-p1 rounded-xl p-6 bg-p1/5 mt-4'>
       <div className='mb-6'>
@@ -310,7 +370,14 @@ const Careers = () => {
       </div>
 
       <div className='flex gap-4 pt-4'>
-        <Button>Apply Now</Button>
+        <a
+          href={job.applicationLink}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='inline-block'
+        >
+          <Button>Apply Now</Button>
+        </a>
         <button className='px-6 py-3 border-2 border-p1 text-p1 rounded-full hover:bg-p1/10 transition-all duration-300'>
           Save Job
         </button>
@@ -323,6 +390,7 @@ const Careers = () => {
       description: PropTypes.string.isRequired,
       requirements: PropTypes.arrayOf(PropTypes.string).isRequired,
       responsibilities: PropTypes.arrayOf(PropTypes.string).isRequired,
+      applicationLink: PropTypes.string.isRequired,
     }).isRequired,
   };
 
@@ -373,7 +441,14 @@ const Careers = () => {
               resume and let us know how you&apos;d like to contribute to our
               mission.
             </p>
-            <Button>Contact Us</Button>
+            <a
+              href='https://forms.gle/H8FmvFBwBgTGMy6Z8'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='inline-block'
+            >
+              <Button>Contact Us</Button>
+            </a>
           </div>
         </div>
       </div>
