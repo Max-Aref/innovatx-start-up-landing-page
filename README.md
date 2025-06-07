@@ -179,5 +179,3 @@ Configured for React best practices with:
 ---
 
 **Built with ❤️ by the InnovatX team**
-
-Similar code found with 1 license type
