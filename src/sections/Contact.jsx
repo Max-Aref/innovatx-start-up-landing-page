@@ -98,17 +98,17 @@ const Contact = () => {
   };
 
   return (
-    <section className='g7 sm:mx-auto'>
+    <section className='g7'>
       <Element name='contact' className='relative'>
-        <div className='container'>
-          <div className='mt-0 overflow-hidden xl:flex-row flex gap-10'>
-            <div className='flex-[0.75] p-12 rounded-2xl'>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+          <div className='mt-0 overflow-hidden xl:flex-row flex gap-10 justify-center'>
+            <div className='flex-[0.75] xl:flex-[0.75] w-full max-w-4xl mx-auto p-6 sm:p-8 lg:p-12 rounded-2xl'>
               <p className='sectionSubText'>Get in touch</p>
               <h3 className='sectionHeadText text-[#79f0da]'>Contact.</h3>
               <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className='flex flex-col gap-8 mt-12 '
+                className='flex flex-col gap-8 mt-12'
               >
                 <label className='flex flex-col'>
                   <span className='font-medium mb-4 small-compact uppercase text-s3'>
