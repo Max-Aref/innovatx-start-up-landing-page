@@ -4,6 +4,7 @@ import Header from "./sections/Header";
 import Footer from "./sections/Footer";
 import Home from "./pages/Home";
 import Careers from "./pages/Careers";
+import FloatingAiAssistant from "./components/FloatingAiAssistant";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <FloatingAiAssistant />
       </div>
     </Router>
   );

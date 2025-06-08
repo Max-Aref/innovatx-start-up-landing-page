@@ -108,7 +108,7 @@ const Contact = () => {
               <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className='flex flex-col gap-8 mt-12'
+                className='flex flex-col gap-8 mt-12 sm:mx-auto'
               >
                 <label className='flex flex-col'>
                   <span className='font-medium mb-4 small-compact uppercase text-s3'>
