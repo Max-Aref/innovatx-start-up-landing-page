@@ -98,7 +98,7 @@ const Contact = () => {
   };
 
   return (
-    <section className='g7'>
+    <section className='g7 sm:mx-auto'>
       <Element name='contact' className='relative'>
         <div className='container'>
           <div className='mt-0 overflow-hidden xl:flex-row flex gap-10'>
@@ -108,7 +108,7 @@ const Contact = () => {
               <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className='flex flex-col gap-8 mt-12 sm:mx-auto'
+                className='flex flex-col gap-8 mt-12 '
               >
                 <label className='flex flex-col'>
                   <span className='font-medium mb-4 small-compact uppercase text-s3'>
