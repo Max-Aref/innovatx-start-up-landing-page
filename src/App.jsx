@@ -8,6 +8,7 @@ import BlogDetails from "./pages/BlogDetails";
 import SmallBusinessMission from "./pages/SmallBusinessMission";
 import StartupsMission from "./pages/StartupsMission";
 import InhouseProjectsMission from "./pages/InhouseProjectsMission";
+import BookConsultation from "./pages/BookConsultation";
 import FloatingAiAssistant from "./components/FloatingAiAssistant";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path='/careers' element={<Careers />} />
             <Route path='/blog' element={<Blog />} />
             <Route path='/blog/:id' element={<BlogDetails />} />
+            <Route path='/book-consultation' element={<BookConsultation />} />
             <Route
               path='/mission/small-business'
               element={<SmallBusinessMission />}

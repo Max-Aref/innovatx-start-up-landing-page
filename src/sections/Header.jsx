@@ -52,14 +52,37 @@ const Header = () => {
   // Handle scrolling after navigation to home page
   useEffect(() => {
     if (location.pathname === "/") {
-      // Small delay to ensure page is fully loaded before scrolling
-      const timeoutId = setTimeout(() => {
-        smoothScrollToTop();
-      }, 150);
+      // Check if there's a hash in the URL (e.g., /#features)
+      const hash = location.hash.replace("#", "");
 
-      return () => clearTimeout(timeoutId);
+      if (hash) {
+        // Small delay to ensure page is fully loaded before scrolling
+        const timeoutId = setTimeout(() => {
+          const element = document.querySelector(`[name="${hash}"]`);
+          if (element) {
+            const offset = 100; // Same offset as LinkScroll
+            const elementPosition =
+              element.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+          }
+        }, 100);
+
+        return () => clearTimeout(timeoutId);
+      } else {
+        // If no hash, scroll to top
+        const timeoutId = setTimeout(() => {
+          smoothScrollToTop();
+        }, 150);
+
+        return () => clearTimeout(timeoutId);
+      }
     }
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
   // Handle click outside to close dropdown
   useEffect(() => {
@@ -78,19 +101,44 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const NavLinkScroll = ({ title }) => (
-    <LinkScroll
-      onClick={() => setOpen(false)}
-      to={title}
-      offset={-100}
-      spy
-      smooth
-      activeClass='nav-active'
-      className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5'
-    >
-      {title}
-    </LinkScroll>
-  );
+  const NavLinkScroll = ({ title }) => {
+    const handleClick = () => {
+      setOpen(false);
+
+      // If we're not on the home page, navigate to home with hash
+      if (location.pathname !== "/") {
+        navigate(`/#${title}`);
+      }
+      // If we're on home page, LinkScroll will handle it
+    };
+
+    // If on home page, use LinkScroll for smooth scrolling
+    if (location.pathname === "/") {
+      return (
+        <LinkScroll
+          onClick={handleClick}
+          to={title}
+          offset={-100}
+          spy
+          smooth
+          activeClass='nav-active'
+          className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5'
+        >
+          {title}
+        </LinkScroll>
+      );
+    }
+
+    // If on another page, use a button that navigates to home with hash
+    return (
+      <button
+        onClick={handleClick}
+        className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5'
+      >
+        {title}
+      </button>
+    );
+  };
 
   const handleMissionClick = (e) => {
     e.preventDefault();
@@ -261,6 +309,18 @@ const Header = () => {
                     Careers
                   </NavLink>
                 </li>
+
+                {/* Book Consultation Button - Mobile */}
+                <li className='lg:hidden nav-li mt-8'>
+                  <Link
+                    to='/book-consultation'
+                    className='flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-p1 to-p3 rounded-full text-black font-bold hover:scale-105 transition-all duration-300 shadow-lg'
+                    onClick={() => setOpen(false)}
+                  >
+                    <span>📅</span>
+                    <span>Book Free Consultation</span>
+                  </Link>
+                </li>
               </ul>
             </nav>
 
@@ -283,6 +343,16 @@ const Header = () => {
             </div>
           </div>
         </div>
+
+        {/* Book Consultation Button - Desktop */}
+        <Link
+          to='/book-consultation'
+          className='hidden lg:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-p1 to-p3 rounded-full text-black font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-p1/50'
+          onClick={() => setOpen(false)}
+        >
+          <span>📅</span>
+          <span>Book Consultation</span>
+        </Link>
 
         {/* Mobile Toggle Button - Centered */}
         <button
