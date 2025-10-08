@@ -245,6 +245,22 @@ const Header = () => {
                     Careers
                   </NavLink>
                 </li>
+
+                {/* Blog Link - Added as per suggestion */}
+                <li className='nav-li flex items-center h-full'>
+                  <NavLink
+                    to='/blog'
+                    className={({ isActive }) =>
+                      clsx(
+                        "base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5",
+                        isActive && "nav-active"
+                      )
+                    }
+                    onClick={() => setOpen(false)}
+                  >
+                    Blog
+                  </NavLink>
+                </li>
               </ul>
             </nav>
 
