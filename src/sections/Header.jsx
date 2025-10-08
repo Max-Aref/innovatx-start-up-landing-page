@@ -114,19 +114,16 @@ const Header = () => {
   };
 
   const DropdownItem = ({ title, to }) => (
-    <LinkScroll
+    <Link
+      to={to}
       onClick={() => {
         setOpen(false);
         setMissionDropdownOpen(false);
       }}
-      to={to}
-      offset={-100}
-      spy
-      smooth
       className='block px-4 py-3 text-md text-p4 hover:text-p1 hover:bg-p1/10 transition-all duration-200 cursor-pointer border-b border-s4/10 last:border-b-0'
     >
       {title}
-    </LinkScroll>
+    </Link>
   );
 
   return (
@@ -208,12 +205,15 @@ const Header = () => {
                       <div className='py-2'>
                         <DropdownItem
                           title='Small Business Mission'
-                          to='small-business'
+                          to='/mission/small-business'
                         />
-                        <DropdownItem title='Startups Mission' to='startups' />
                         <DropdownItem
-                          title='In House Solutions'
-                          to='solutions'
+                          title='Startups Mission'
+                          to='/mission/startups'
+                        />
+                        <DropdownItem
+                          title='In-House Projects'
+                          to='/mission/inhouse-projects'
                         />
                       </div>
                     </div>
@@ -228,6 +228,22 @@ const Header = () => {
                 </li>
                 <li className='nav-li flex items-center h-full'>
                   <NavLinkScroll title='contact' />
+                </li>
+
+                {/* Blog Link */}
+                <li className='nav-li flex items-center h-full'>
+                  <NavLink
+                    to='/blog'
+                    className={({ isActive }) =>
+                      clsx(
+                        "base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5",
+                        isActive && "nav-active"
+                      )
+                    }
+                    onClick={() => setOpen(false)}
+                  >
+                    Blog
+                  </NavLink>
                 </li>
 
                 {/* Careers Link - Now matches other links */}
