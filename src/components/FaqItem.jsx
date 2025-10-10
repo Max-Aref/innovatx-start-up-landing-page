@@ -1,5 +1,5 @@
+import { memo, useState, useCallback } from "react";
 import clsx from "clsx";
-import { useState } from "react";
 import { Collapse } from "react-collapse";
 import PropTypes from "prop-types";
 
@@ -7,13 +7,15 @@ const FaqItem = ({ item, index }) => {
   const [activeId, setActiveId] = useState(null);
   const active = activeId === item.id;
 
+  const handleToggle = useCallback(() => {
+    setActiveId((prevId) => (prevId === item.id ? null : item.id));
+  }, [item.id]);
+
   return (
     <div className='relative z-2 mb-16'>
       <div
         className='group relative flex cursor-pointer items-center justify-between gap-10 px-7'
-        onClick={() => {
-          setActiveId(activeId === item.id ? null : item.id);
-        }}
+        onClick={handleToggle}
       >
         <div className='flex-1'>
           <div className='small-compact mb-1.5 text-p3 max-lg:hidden'>
@@ -66,4 +68,4 @@ FaqItem.propTypes = {
   index: PropTypes.number.isRequired,
 };
 
-export default FaqItem;
+export default memo(FaqItem);

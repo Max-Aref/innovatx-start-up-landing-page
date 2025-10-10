@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Element } from "react-scroll";
 
 import { details, features } from "../constants/index.jsx";
@@ -22,6 +23,7 @@ const Features = () => {
                       src={icon}
                       className='size-28 object-contain'
                       alt={title}
+                      loading='lazy'
                     />
                   </div>
                 </div>
@@ -47,6 +49,7 @@ const Features = () => {
                       src={icon}
                       alt={title}
                       className='size-17/20 object-contain z-20'
+                      loading='lazy'
                     />
                   </div>
 
@@ -62,4 +65,4 @@ const Features = () => {
     </section>
   );
 };
-export default Features;
+export default memo(Features);

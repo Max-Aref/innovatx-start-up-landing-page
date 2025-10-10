@@ -1,10 +1,13 @@
-import React from "react";
+import { memo, useMemo } from "react";
 import { Element } from "react-scroll";
 import { faq } from "../constants";
 import FaqItem from "../components/FaqItem";
 
 const Faq = () => {
-  const halfLength = Math.floor(faq.length / 2);
+  const halfLength = useMemo(() => Math.floor(faq.length / 2), []);
+  const firstHalf = useMemo(() => faq.slice(0, halfLength), [halfLength]);
+  const secondHalf = useMemo(() => faq.slice(halfLength), [halfLength]);
+
   return (
     <section className='mt-40 max-lg:mt-10'>
       <Element name='faq' className='relative'>
@@ -28,17 +31,18 @@ const Faq = () => {
                 src='/images/faq-logo.svg'
                 alt='faq-icon'
                 className='size-1/2'
+                loading='lazy'
               />
             </div>
             {/* left faq list  */}
             <div className='relative flex-1 pt-24'>
-              {faq.slice(0, halfLength).map((item, index) => (
+              {firstHalf.map((item, index) => (
                 <FaqItem key={item.id} index={index} item={item} />
               ))}
             </div>
             {/* right faq list  */}
             <div className='relative flex-1 lg:pt-24'>
-              {faq.slice(halfLength).map((item, index) => (
+              {secondHalf.map((item, index) => (
                 <FaqItem key={item.id} index={halfLength + index} item={item} />
               ))}
             </div>
@@ -51,4 +55,4 @@ const Faq = () => {
   );
 };
 
-export default Faq;
+export default memo(Faq);

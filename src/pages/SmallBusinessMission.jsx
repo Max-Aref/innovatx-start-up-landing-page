@@ -151,7 +151,7 @@ const SmallBusinessMission = () => {
             {/* CTA Buttons */}
             <div className='flex flex-wrap gap-4 justify-center animate-slide-up'>
               <Link
-                to='/contact'
+                to='/book-consultation'
                 className='px-8 py-4 bg-gradient-to-r from-p1 to-p3 rounded-full text-black font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-p1/50'
               >
                 Schedule Free Consultation
@@ -397,7 +397,7 @@ const SmallBusinessMission = () => {
             </p>
             <div className='flex flex-wrap gap-4 justify-center'>
               <Link
-                to='/contact'
+                to='/book-consultation'
                 className='px-8 py-4 bg-gradient-to-r from-p1 to-p3 rounded-full text-black font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-p1/50'
               >
                 Book Your Free Consultation

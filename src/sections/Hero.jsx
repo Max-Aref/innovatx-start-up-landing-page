@@ -1,5 +1,6 @@
-import React from "react";
+import { memo } from "react";
 import { Element, Link as LinkScroll } from "react-scroll";
+import { Link } from "react-router-dom";
 import Button from "../components/Button";
 
 const Hero = () => {
@@ -21,9 +22,9 @@ const Hero = () => {
               streamlined, results-driven strategies.
             </p>
             <div className='max-lg:flex max-lg:justify-center'>
-              <LinkScroll to='contact' offset={-100} spy smooth>
+              <Link to='/book-consultation'>
                 <Button icon='/images/zap.svg'>free consultation</Button>
-              </LinkScroll>
+              </Link>
             </div>
           </div>
 
@@ -33,6 +34,7 @@ const Hero = () => {
               src='/images/hero.png'
               className='w-full h-auto object-contain max-w-full'
               alt='hero'
+              loading='lazy'
             />
           </div>
         </div>
@@ -41,4 +43,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default memo(Hero);

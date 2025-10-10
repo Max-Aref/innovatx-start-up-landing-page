@@ -225,7 +225,7 @@ const InhouseProjectsMission = () => {
                 Explore Our Projects
               </a>
               <Link
-                to='/contact'
+                to='/book-consultation'
                 className='px-8 py-4 border-2 border-s3 rounded-full text-p4 hover:border-p1 hover:text-p1 transition-all duration-300 font-semibold'
               >
                 Partner With Us
@@ -499,7 +499,7 @@ const InhouseProjectsMission = () => {
             </p>
             <div className='flex flex-wrap gap-4 justify-center'>
               <Link
-                to='/contact'
+                to='/book-consultation'
                 className='px-8 py-4 bg-gradient-to-r from-p1 via-p2 to-p3 rounded-full text-black font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-p1/50'
               >
                 Get in Touch

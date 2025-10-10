@@ -163,7 +163,7 @@ const StartupsMission = () => {
             {/* CTA Buttons */}
             <div className='flex flex-wrap gap-4 justify-center animate-slide-up'>
               <Link
-                to='/contact'
+                to='/book-consultation'
                 className='px-8 py-4 bg-gradient-to-r from-p1 via-p2 to-p3 rounded-full text-black font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-p1/50 animate-pulse-slow'
               >
                 Build Your MVP with Us
@@ -470,7 +470,7 @@ const StartupsMission = () => {
             </p>
             <div className='flex flex-wrap gap-4 justify-center'>
               <Link
-                to='/contact'
+                to='/book-consultation'
                 className='px-8 py-4 bg-gradient-to-r from-p1 via-p2 to-p3 rounded-full text-black font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-p1/50'
               >
                 Start Your Startup Journey

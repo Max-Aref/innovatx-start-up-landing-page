@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import clsx from "clsx";
 import { Element } from "react-scroll";
+import { Link } from "react-router-dom";
 import { plans } from "../constants";
 import CountUp from "react-countup";
 import { scroller } from "react-scroll";
@@ -13,26 +14,29 @@ const Pricing = () => {
 
   const featuresLimit = 4; // Show only 4 features initially
 
-  const toggleExpanded = (planId) => {
-    const wasExpanded = expandedCards[planId];
+  const toggleExpanded = useCallback(
+    (planId) => {
+      const wasExpanded = expandedCards[planId];
 
-    setExpandedCards((prev) => ({
-      ...prev,
-      [planId]: !prev[planId], // Toggle specific card
-    }));
+      setExpandedCards((prev) => ({
+        ...prev,
+        [planId]: !prev[planId], // Toggle specific card
+      }));
 
-    // If collapsing (was expanded), scroll back to plans section with slower animation
-    if (wasExpanded) {
-      setTimeout(() => {
-        scroller.scrollTo("plans", {
-          duration: 1500, // Increased from 800 to 1500ms for slower scroll
-          delay: 200, // Increased delay for smoother transition
-          smooth: "easeInOutQuart",
-          offset: -100,
-        });
-      }, 300); // Increased timeout for better UX
-    }
-  };
+      // If collapsing (was expanded), scroll back to plans section with slower animation
+      if (wasExpanded) {
+        setTimeout(() => {
+          scroller.scrollTo("plans", {
+            duration: 1500, // Increased from 800 to 1500ms for slower scroll
+            delay: 200, // Increased delay for smoother transition
+            smooth: "easeInOutQuart",
+            offset: -100,
+          });
+        }, 300); // Increased timeout for better UX
+      }
+    },
+    [expandedCards]
+  );
 
   return (
     <section className='mb-40'>
@@ -184,7 +188,9 @@ const Pricing = () => {
 
                   {/* Get Started button */}
                   <div className='mt-10 flex w-full justify-center'>
-                    <Button icon={plan.icon}>Get Started</Button>
+                    <Link to='/book-consultation'>
+                      <Button icon={plan.icon}>Get Started</Button>
+                    </Link>
                   </div>
 
                   {/* Learn More button - now below Get Started */}
@@ -224,4 +230,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default memo(Pricing);

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link as LinkScroll } from "react-scroll";
 import clsx from "clsx";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
@@ -13,41 +13,64 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add("menu-open");
+      // Prevent scroll on iOS
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.top = `-${window.scrollY}px`;
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.classList.remove("menu-open");
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.top = "";
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      }
+    }
+  }, [open]);
+
   useEffect(() => {
     const handleScroll = () => {
       setHasScrolled(window.scrollY > 32);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Enhanced smooth scroll to top function
-  const smoothScrollToTop = () => {
+  const smoothScrollToTop = useCallback(() => {
     // Use react-scroll for smooth animation
     scroll.scrollToTop({
       duration: 1200,
       delay: 0,
       smooth: "easeInOutCubic",
     });
-  };
+  }, []);
 
   // Handle logo click to go to home page and scroll to header smoothly
-  const handleLogoClick = (e) => {
-    // Close mobile menu if open
-    setOpen(false);
-    setMissionDropdownOpen(false);
+  const handleLogoClick = useCallback(
+    (e) => {
+      // Close mobile menu if open
+      setOpen(false);
+      setMissionDropdownOpen(false);
 
-    // Check if we're already on the home page
-    if (location.pathname === "/") {
-      // If on home page, prevent default link behavior and smooth scroll to top
-      e.preventDefault();
-      smoothScrollToTop();
-    } else {
-      // If on another page (like careers), navigate to home
-      // The scroll will happen automatically when the page loads
-      navigate("/");
-    }
-  };
+      // Check if we're already on the home page
+      if (location.pathname === "/") {
+        // If on home page, prevent default link behavior and smooth scroll to top
+        e.preventDefault();
+        smoothScrollToTop();
+      } else {
+        // If on another page (like careers), navigate to home
+        // The scroll will happen automatically when the page loads
+        navigate("/");
+      }
+    },
+    [location.pathname, navigate, smoothScrollToTop]
+  );
 
   // Handle scrolling after navigation to home page
   useEffect(() => {
@@ -82,7 +105,7 @@ const Header = () => {
         return () => clearTimeout(timeoutId);
       }
     }
-  }, [location.pathname, location.hash]);
+  }, [location.pathname, location.hash, smoothScrollToTop]);
 
   // Handle click outside to close dropdown
   useEffect(() => {
@@ -97,7 +120,9 @@ const Header = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside, {
+      passive: true,
+    });
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
@@ -205,22 +230,40 @@ const Header = () => {
         {/* Navbar - Centered alignment */}
         <div
           className={clsx(
-            "w-full max-lg:fixed max-lg:top-0 max-lg:left-0 max-lg:w-full max-lg:bg-s2 max-lg:opacity-0 flex-50",
-            open ? "max-lg:opacity-100" : "max-lg:pointer-events-none"
+            "w-full max-lg:fixed max-lg:top-0 max-lg:left-0 max-lg:w-full max-lg:h-screen max-lg:bg-s2 max-lg:opacity-0 max-lg:transition-opacity max-lg:duration-300 flex-50",
+            open
+              ? "max-lg:opacity-100 max-lg:pointer-events-auto"
+              : "max-lg:pointer-events-none"
           )}
         >
-          <div className='max-lg:relative max-lg:flex max-lg:flex-col max-lg:min-h-screen max-lg:p-6 max-lg:overflow-hidden sidebar-before max-lg:px-4'>
-            <nav className='max-lg:relative max-lg:z-2 max-lg:my-auto overflow-visible'>
-              <ul className='flex justify-between items-center gap-10 max-lg:block max-lg:px-12 h-16 max-lg:h-auto max-lg:mt-10'>
+          <div className='max-lg:relative max-lg:flex max-lg:flex-col max-lg:h-full max-lg:p-6 max-lg:pb-safe max-lg:overflow-y-auto max-lg:overflow-x-hidden sidebar-before max-lg:px-4'>
+            <nav className='max-lg:relative max-lg:z-2 max-lg:my-auto max-lg:pb-20 overflow-visible'>
+              <ul className='flex justify-between items-center gap-10 max-lg:block max-lg:px-4 sm:max-lg:px-8 md:max-lg:px-12 h-16 max-lg:h-auto max-lg:mt-10 max-lg:space-y-2'>
                 <li className='nav-li flex items-center h-full'>
                   <NavLinkScroll title='features' />
+                </li>
+
+                {/* About Link - Mobile Only */}
+                <li className='nav-li lg:hidden flex items-center h-full'>
+                  <NavLink
+                    to='/about'
+                    className={({ isActive }) =>
+                      clsx(
+                        "base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5",
+                        isActive && "nav-active"
+                      )
+                    }
+                    onClick={() => setOpen(false)}
+                  >
+                    About
+                  </NavLink>
                 </li>
 
                 {/* Mission Dropdown */}
                 <li className='nav-li relative flex items-center h-full'>
                   <div
                     ref={triggerRef}
-                    className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5 flex items-center gap-1 select-none h-full'
+                    className='base-bold text-p4 uppercase transition-colors duration-500 cursor-pointer hover:text-p1 max-lg:my-4 max-lg:h5 flex items-center gap-1 select-none h-full touch-manipulation'
                     onClick={handleMissionClick}
                     onMouseEnter={handleMissionHover}
                     onMouseLeave={handleMissionLeave}
@@ -246,7 +289,7 @@ const Header = () => {
                   {missionDropdownOpen && (
                     <div
                       ref={dropdownRef}
-                      className='absolute top-full left-0 mt-2 w-64 bg-black-100/95 backdrop-blur-md border border-p1/20 rounded-xl shadow-2xl overflow-hidden z-[100] max-lg:static max-lg:w-full max-lg:bg-transparent max-lg:border-none max-lg:shadow-none max-lg:mt-2'
+                      className='absolute top-full left-0 mt-2 w-64 bg-black-100/95 backdrop-blur-md border border-p1/20 rounded-xl shadow-2xl overflow-hidden z-[100] max-lg:static max-lg:w-full max-lg:bg-transparent max-lg:border-none max-lg:shadow-none max-lg:mt-2 max-lg:mb-2'
                       onMouseEnter={() => setMissionDropdownOpen(true)}
                       onMouseLeave={handleMissionLeave}
                     >
@@ -311,21 +354,23 @@ const Header = () => {
                 </li>
 
                 {/* Book Consultation Button - Mobile */}
-                <li className='lg:hidden nav-li mt-8'>
+                <li className='lg:hidden nav-li mt-8 mb-4'>
                   <Link
                     to='/book-consultation'
-                    className='flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-p1 to-p3 rounded-full text-black font-bold hover:scale-105 transition-all duration-300 shadow-lg'
+                    className='flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-p1 to-p3 rounded-full text-black font-bold hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg touch-manipulation'
                     onClick={() => setOpen(false)}
                   >
                     <span>📅</span>
-                    <span>Book Free Consultation</span>
+                    <span className='text-sm sm:text-base'>
+                      Book Free Consultation
+                    </span>
                   </Link>
                 </li>
               </ul>
             </nav>
 
             {/* Background Image */}
-            <div className='lg:hidden block absolute top-1/2 left-0 w-[960px] h-[380px] translate-x-[-290px] -translate-y-1/2 rotate-90'>
+            <div className='lg:hidden block absolute top-1/2 left-0 w-[960px] h-[380px] translate-x-[-290px] -translate-y-1/2 rotate-90 pointer-events-none'>
               <img
                 src='/images/bg-outlines.svg'
                 alt='outline'
@@ -347,7 +392,7 @@ const Header = () => {
         {/* Book Consultation Button - Desktop */}
         <Link
           to='/book-consultation'
-          className='hidden lg:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-p1 to-p3 rounded-full text-black font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-p1/50'
+          className='hidden lg:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-p1 to-p3 rounded-full text-black font-semibold hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-p1/50'
           onClick={() => setOpen(false)}
         >
           <span>📅</span>
@@ -356,8 +401,9 @@ const Header = () => {
 
         {/* Mobile Toggle Button - Centered */}
         <button
-          className='lg:hidden z-2 size-10 border-2 border-s4/25 rounded-full flex justify-center items-center'
+          className='lg:hidden z-[60] size-10 border-2 border-s4/25 rounded-full flex justify-center items-center touch-manipulation active:scale-90 transition-transform'
           onClick={() => setOpen((prevState) => !prevState)}
+          aria-label={open ? "Close menu" : "Open menu"}
         >
           <img
             src={`/images/${open ? "close" : "magic"}.svg`}

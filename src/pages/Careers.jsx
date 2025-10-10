@@ -163,7 +163,7 @@ const Careers = () => {
         "We're looking for a creative and strategic Social Media Marketing Manager to manage multiple client accounts and drive engagement across all major social platforms. You'll be responsible for developing comprehensive social media strategies that build brand awareness and drive business growth.",
       requirements: [
         "5+ years of experience managing multiple social media accounts for businesses",
-        "Proven track record with Facebook, Instagram, Twitter, LinkedIn, TikTok, and YouTube",
+        "Proven track record with Facebook, Instagram, X, LinkedIn, TikTok, and YouTube",
         "Experience with social media management tools (Hootsuite, Buffer, Sprout Social)",
         "Strong knowledge of social media analytics and performance tracking",
         "Proficiency in content creation tools (Canva, Adobe Creative Suite, Figma)",
@@ -197,7 +197,7 @@ const Careers = () => {
       requirements: [
         "Currently pursuing or recently completed degree in Marketing, Communications, Graphic Design, or related field",
         "Strong creative skills with experience in visual content creation",
-        "Familiarity with social media platforms (Instagram, TikTok, Facebook, LinkedIn, Twitter)",
+        "Familiarity with social media platforms (Instagram, TikTok, Facebook, LinkedIn, X)",
         "Basic knowledge of design tools (Canva, Adobe Creative Suite, or similar)",
         "Understanding of social media trends and viral content formats",
         "Excellent written communication and storytelling skills",

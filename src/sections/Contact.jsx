@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, memo } from "react";
 // import { motion } from "framer-motion";
 import emailjs from "emailjs-com";
 import Button from "../components/Button";
@@ -17,85 +16,88 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
 
   // Fixed handleChange function
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value }); // Use name, not e.target.name
-  };
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+  }, []);
 
   // show alert
-  const ShowAlert = () => {
+  const ShowAlert = useCallback(() => {
     Swal.fire({
       title: "Thank you! We Will get back to you as soon as possible!",
       icon: "success",
       draggable: true,
     });
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      setLoading(true);
 
-    // Add validation
-    if (!form.name || !form.email || !form.message) {
-      alert("Please fill in all required fields");
-      setLoading(false);
-      return;
-    }
-
-    // Initialize EmailJS
-    emailjs.init("SVcmK9kMb8wX0RSQa");
-
-    emailjs
-      .send(
-        "service_qi5vmts",
-        "template_mscva2n",
-        {
-          from_name: form.name,
-          to_name: "Max",
-          from_email: form.email,
-          to_email: "mohamed.aref32@gmail.com",
-          message: form.message,
-          plan: form.plan || "Not specified", // Include plan field
-        },
-        "SVcmK9kMb8wX0RSQa"
-      )
-      .then((response) => {
-        console.log("SUCCESS!", response.status, response.text);
-
-        // Reset form
-        setForm({
-          name: "",
-          email: "",
-          plan: "",
-          message: "",
-        });
-
-        // Reset form element
-        if (formRef.current) {
-          formRef.current.reset();
-        }
-
+      // Add validation
+      if (!form.name || !form.email || !form.message) {
+        alert("Please fill in all required fields");
         setLoading(false);
-        ShowAlert(); // Remove parameter
-      })
-      .catch((err) => {
-        console.error("FAILED...", err);
-        setLoading(false);
+        return;
+      }
 
-        // Better error logging
-        console.log("Error details:", {
-          status: err.status,
-          text: err.text,
-          message: err.message,
+      // Initialize EmailJS
+      emailjs.init("SVcmK9kMb8wX0RSQa");
+
+      emailjs
+        .send(
+          "service_qi5vmts",
+          "template_mscva2n",
+          {
+            from_name: form.name,
+            to_name: "Max",
+            from_email: form.email,
+            to_email: "mohamed.aref32@gmail.com",
+            message: form.message,
+            plan: form.plan || "Not specified", // Include plan field
+          },
+          "SVcmK9kMb8wX0RSQa"
+        )
+        .then((response) => {
+          console.log("SUCCESS!", response.status, response.text);
+
+          // Reset form
+          setForm({
+            name: "",
+            email: "",
+            plan: "",
+            message: "",
+          });
+
+          // Reset form element
+          if (formRef.current) {
+            formRef.current.reset();
+          }
+
+          setLoading(false);
+          ShowAlert(); // Remove parameter
+        })
+        .catch((err) => {
+          console.error("FAILED...", err);
+          setLoading(false);
+
+          // Better error logging
+          console.log("Error details:", {
+            status: err.status,
+            text: err.text,
+            message: err.message,
+          });
+
+          alert(
+            `Failed to send message: ${
+              err.text || err.message || "Unknown error"
+            }`
+          );
         });
-
-        alert(
-          `Failed to send message: ${
-            err.text || err.message || "Unknown error"
-          }`
-        );
-      });
-  };
+    },
+    [form, ShowAlert]
+  );
 
   return (
     <section className='g7'>
@@ -185,4 +187,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default memo(Contact);

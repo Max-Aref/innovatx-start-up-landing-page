@@ -1,3 +1,4 @@
+import { memo } from "react";
 import clsx from "clsx";
 import Marker from "./Marker";
 import PropTypes from "prop-types";
@@ -20,8 +21,9 @@ const Button = ({
         {icon && (
           <img
             src={icon}
-            alt='circle'
+            alt='button icon'
             className='size-10 mr-5 object-contain z-10'
+            loading='lazy'
           />
         )}
         <span className='relative z-2 font-poppins base-bold text-p1 uppercase'>
@@ -60,4 +62,4 @@ Button.propTypes = {
   markerFill: PropTypes.string,
 };
 
-export default Button;
+export default memo(Button);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { getAllBlogPosts } from "../constants/markdownLoader";
 
@@ -22,22 +22,31 @@ const Blog = () => {
     loadPosts();
   }, []);
 
-  // Extract unique categories from all posts
-  const categories = [
-    "all",
-    ...new Set(posts.flatMap((post) => post.tags || [])),
-  ];
+  // Extract unique categories from all posts - memoized
+  const categories = useMemo(() => {
+    return ["all", ...new Set(posts.flatMap((post) => post.tags || []))];
+  }, [posts]);
 
-  // Filter posts based on search and category
-  const filteredPosts = posts.filter((post) => {
-    const matchesSearch =
-      post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" ||
-      (post.tags && post.tags.includes(selectedCategory));
-    return matchesSearch && matchesCategory;
-  });
+  // Filter posts based on search and category - memoized
+  const filteredPosts = useMemo(() => {
+    return posts.filter((post) => {
+      const matchesSearch =
+        post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.description?.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory =
+        selectedCategory === "all" ||
+        (post.tags && post.tags.includes(selectedCategory));
+      return matchesSearch && matchesCategory;
+    });
+  }, [posts, searchTerm, selectedCategory]);
+
+  const handleSearchChange = useCallback((e) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
+  const handleCategoryChange = useCallback((category) => {
+    setSelectedCategory(category);
+  }, []);
 
   if (loading) {
     return (
@@ -73,7 +82,7 @@ const Blog = () => {
                 type='text'
                 placeholder='Search articles...'
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={handleSearchChange}
                 className='w-full px-4 md:px-6 py-3 md:py-4 bg-s2 border-2 border-s3 rounded-xl text-p4 placeholder-p5/50 focus:outline-none focus:border-p1 transition-colors text-sm md:text-base'
               />
             </div>
@@ -84,7 +93,7 @@ const Blog = () => {
             {categories.map((category) => (
               <button
                 key={category}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => handleCategoryChange(category)}
                 className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full border-2 transition-all duration-300 text-xs md:text-sm font-medium uppercase ${
                   selectedCategory === category
                     ? "border-p1 bg-p1/10 text-p1"

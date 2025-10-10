@@ -123,7 +123,7 @@ Displays with icon-enhanced layout:
 
 #### Social Sharing Buttons:
 
-- **Platforms**: Twitter, LinkedIn, Facebook
+- **Platforms**: X (formerly Twitter), LinkedIn, Facebook
 - **Features**:
   - Pre-filled share URLs with article title
   - SVG icons for each platform
@@ -261,6 +261,8 @@ innovatx/
 
 ```css
 .animate-slide-up    /* Slides up with fade-in */
+/* Slides up with fade-in */
+/* Slides up with fade-in */
 /* Slides up with fade-in */
 .animate-fade-in; /* Simple fade-in effect */
 ```

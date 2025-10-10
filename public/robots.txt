@@ -1,0 +1,17 @@
+# Innovatx Website - Robots.txt
+# This file tells search engines which pages they can and cannot crawl
+
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.innovatx.com/sitemap.xml
+
+# Optional: Disallow specific paths if needed in the future
+# Disallow: /admin/
+# Disallow: /api/
+# Disallow: /private/
+
+# Crawl-delay (optional, helps prevent overloading server)
+# Crawl-delay: 1
